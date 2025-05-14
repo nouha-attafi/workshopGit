@@ -1,4 +1,4 @@
-"""# 🌐 CodeFam – Plateforme Éducative de Codage (Desktop)
+# 🌐 CodeFam – Plateforme Éducative de Codage (Desktop)
 
 <p align="center">
   <a href="https://github.com/CodeFam">
