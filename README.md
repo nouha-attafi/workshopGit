@@ -1,4 +1,4 @@
-# 🌐 CodeFam – Plateforme Éducative de Codage (Web)
+"""# 🌐 CodeFam – Plateforme Éducative de Codage (Web)
 
 <p align="center">
   <a href="https://github.com/CodeFam">
@@ -29,6 +29,9 @@ L'objectif est de fournir une expérience d'apprentissage intuitive, sécurisée
 - [Utilisation](#utilisation)
 - [Fonctionnalités](#fonctionnalités)
 - [APIs Utilisées](#apis-utilisées)
+- [Contribuer](#contribuer)
+- [Démo](#démo)
+- [Contact](#contact)
 
 ## ✅ Pré-requis
 
@@ -106,10 +109,11 @@ Une fois l’application lancée, vous pouvez :
 ## 🛠 Fonctionnalités
 
 ### Gestion des Utilisateurs
-- Authentification via email/mot de passe ou compte Google.
-- Réinitialisation sécurisée du mot de passe oublié.
-- Gestion complète (CRUD) des comptes par les administrateurs.
-- Tableau de bord statistique pour visualiser les données des utilisateurs et leurs interactions.
+Pour une application web développée avec le framework Symfony PHP, un système de gestion des utilisateurs performant et sécurisé a été mis en place. Ce système permet :
+- Une authentification fluide via email et mot de passe ou via un compte Google, avec une interface intuitive pour les utilisateurs.
+- Une fonctionnalité de réinitialisation de mot de passe oublié, garantissant une récupération de compte simple et sécurisée.
+- Un système CRUD complet pour les administrateurs, permettant la création, lecture, modification et suppression des comptes, offrant un contrôle total sur les utilisateurs.
+- Un tableau de bord statistique fournissant des visualisations claires des données relatives aux utilisateurs et à leurs interactions, renforçant la gestion et le suivi au sein de l'application.
 
 ### Gestion des Offres et Achats
 - Opérations CRUD pour les offres et achats (création, modification, suppression, consultation).
@@ -119,7 +123,7 @@ Une fois l’application lancée, vous pouvez :
 
 ### Rôles et Permissions
 - **Administrateur/Tuteur** :
-  - Gestion complète (CRUD) des catégories, noms de cours, cours, et vidéos.
+  - Gestion complète (CRUD) des catégories, noms [CRUD des catégories, noms de cours, cours, vidéos].
   - Recherche dynamique sur toutes les entités.
   - Visualisation des moyennes des évaluations par vidéo.
 - **Utilisateur** :
@@ -155,9 +159,7 @@ Une fois l’application lancée, vous pouvez :
 ### Gestion des Quiz
 - Création, modification, suppression de quiz (noms, cours, niveaux : facile, moyen, difficile).
 - Gestion des questions avec réponses à choix multiples.
-- Génération alé нашого
-
-atoire de quiz basée sur le cours, le niveau de difficulté et le nombre de questions.
+- Génération aléatoire de quiz basée sur le cours, le niveau de difficulté et le nombre de questions.
 - Administration des réponses (correctes/incorrectes).
 - Visualisation des résultats via graphiques (PieChart).
 - Recherche dynamique des quiz par nom, cours, ou niveau.
