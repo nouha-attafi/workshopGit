@@ -42,9 +42,18 @@ Avant d’installer le projet, assurez-vous d’avoir les éléments suivants in
 - **[Symfony CLI](https://symfony.com/download)** : Pour lancer le serveur
 - **MySQL** : Base de données
 - **[Git](https://git-scm.com/)** : Pour cloner le repository
-- **Node.js et npm** : Pour gérer les assets frontend
+- **Node.js et Yarn** : Pour gérer les assets frontend
+- **wkhtmltopdf** : Pour la génération de PDF avec `knplabs/knp-snappy-bundle`
 - **Clé API [Stripe](https://stripe.com/)** : Pour les paiements (mode test recommandé)
 - **Clé API [Google Cloud](https://cloud.google.com/)** : Pour l'authentification Google
+- **Service de messagerie (ex. Mailgun)** : Pour l'envoi d'emails via `symfony/mailgun-mailer`
+
+### Dépendances Symfony recommandées :
+- `knplabs/knp-snappy-bundle` : Génération de PDF (quiz résultats)
+- `symfony/mailer` et `symfony/mailgun-mailer` : Gestion des emails
+- `knplabs/knp-paginator-bundle` : Pagination des listes
+- `claroline/video-player-bundle` : Gestion des vidéos
+- `highcharts/highcharts` : Visualisation des graphiques (via Yarn)
 
 ## ⚙ Installation
 
@@ -61,12 +70,12 @@ Avant d’installer le projet, assurez-vous d’avoir les éléments suivants in
 
 3. **Installer les dépendances frontend** :
    ```bash
-   npm install
+   yarn install
    ```
 
-4. **Build des assets frontend (Tailwind CSS, etc.)** :
+4. **Build des assets frontend (Tailwind CSS, Highcharts, etc.)** :
    ```bash
-   npm run build
+   yarn build
    ```
 
 5. **Configurer la base de données** :
@@ -79,6 +88,7 @@ Avant d’installer le projet, assurez-vous d’avoir les éléments suivants in
      DATABASE_URL="mysql://votre_utilisateur:votre_mot_de_passe@127.0.0.1:3306/codefam_db"
      STRIPE_API_KEY=sk_test_votre_cle_stripe
      GOOGLE_API_KEY=votre_cle_google
+     MAILER_DSN=mailgun+smtp://votre_clé_mailgun
      ```
    - Exécutez les migrations pour créer les tables :
      ```bash
@@ -86,12 +96,15 @@ Avant d’installer le projet, assurez-vous d’avoir les éléments suivants in
      symfony console doctrine:migrations:migrate
      ```
 
-6. **Lancer le serveur local Symfony** :
+6. **Installer wkhtmltopdf (pour PDF)** :
+   - Suivez les instructions sur [wkhtmltopdf.org](https://wkhtmltopdf.org/downloads.html) pour votre système.
+
+7. **Lancer le serveur local Symfony** :
    ```bash
    symfony server:start
    ```
 
-7. **Accéder à l'application** :
+8. **Accéder à l'application** :
    👉 [http://127.0.0.1:8000](http://127.0.0.1:8000)
 
 ## 🚀 Utilisation
@@ -99,7 +112,7 @@ Avant d’installer le projet, assurez-vous d’avoir les éléments suivants in
 Une fois l’application lancée, vous pouvez :
 
 - **Explorer les cours** : Parcourez les catégories et accédez aux vidéos/PDF.
-- **Répondre à des quiz** : Testez vos connaissances avec des quiz personnalisés.
+- **Répondre à des quiz** : Testez vos connaissances avec des quiz personnalisés, visualisez les statistiques, et téléchargez les résultats en PDF.
 - **Interagir dans le forum** : Créez des posts et commentez.
 - **Acheter des offres** : Utilisez une carte de test Stripe (ex. `4242 4242 4242 4242`) pour simuler un achat.
 - **Gérer votre profil** : Connectez-vous via email/Google, réinitialisez votre mot de passe, et suivez votre progression.
@@ -111,19 +124,19 @@ Une fois l’application lancée, vous pouvez :
 ### Gestion des Utilisateurs
 Pour une application web développée avec le framework Symfony PHP, un système de gestion des utilisateurs performant et sécurisé a été mis en place. Ce système permet :
 - Une authentification fluide via email et mot de passe ou via un compte Google, avec une interface intuitive pour les utilisateurs.
-- Une fonctionnalité de réinitialisation de mot de passe oublié, garantissant une récupération de compte simple et sécurisée.
+- Une fonctionnalité de réinitialisation de mot de passe oublié, garantissant une récupération de compte simple et sécurisée, utilisant `symfony/mailer` et `symfony/mailgun-mailer` pour l'envoi d'emails.
 - Un système CRUD complet pour les administrateurs, permettant la création, lecture, modification et suppression des comptes, offrant un contrôle total sur les utilisateurs.
 - Un tableau de bord statistique fournissant des visualisations claires des données relatives aux utilisateurs et à leurs interactions, renforçant la gestion et le suivi au sein de l'application.
 
 ### Gestion des Offres et Achats
 - Opérations CRUD pour les offres et achats (création, modification, suppression, consultation).
 - Paiement en ligne sécurisé via **Stripe**.
-- Interface détaillée des achats (date, montant, offre, utilisateur).
+- Interface détaillée des achats (date, montant, offre, utilisateur), paginée avec `knplabs/knp-paginator-bundle`.
 - Recherche intelligente des offres par prix pour filtrer selon le budget.
 
 ### Rôles et Permissions
 - **Administrateur/Tuteur** :
-  - Gestion complète (CRUD) des catégories, noms [CRUD des catégories, noms de cours, cours, vidéos].
+  - Gestion complète (CRUD) des catégories, noms de cours, cours, et vidéos (gérées via `claroline/video-player-bundle`).
   - Recherche dynamique sur toutes les entités.
   - Visualisation des moyennes des évaluations par vidéo.
 - **Utilisateur** :
@@ -136,7 +149,7 @@ Pour une application web développée avec le framework Symfony PHP, un système
 - Création, modification, suppression de posts avec support d'images.
 - Système de commentaires hiérarchique (réponses imbriquées).
 - Filtrage de contenu (profanité, XSS).
-- Recherche de posts.
+- Recherche de posts, paginée avec `knplabs/knp-paginator-bundle`.
 - Entités :
   ```php
   Post {
@@ -161,8 +174,9 @@ Pour une application web développée avec le framework Symfony PHP, un système
 - Gestion des questions avec réponses à choix multiples.
 - Génération aléatoire de quiz basée sur le cours, le niveau de difficulté et le nombre de questions.
 - Administration des réponses (correctes/incorrectes).
-- Visualisation des résultats via graphiques (PieChart).
-- Recherche dynamique des quiz par nom, cours, ou niveau.
+- Visualisation des résultats via graphiques (PieChart) avec statistiques détaillées, rendus avec `highcharts/highcharts`.
+- Téléchargement des résultats de quiz au format PDF, généré avec `knplabs/knp-snappy-bundle`.
+- Recherche dynamique des quiz par nom, cours, ou niveau, paginée avec `knplabs/knp-paginator-bundle`.
 
 ### Sécurité
 - Protection contre les captures d’écran et enregistrements vidéo.
