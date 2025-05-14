@@ -1,4 +1,4 @@
-# 🌐 CodeFam – Plateforme Éducative de Codage (Desktop)
+# 🌐 CodeFam – Plateforme Éducative de Codage (Web)
 
 <p align="center">
   <a href="https://github.com/CodeFam">
@@ -11,172 +11,180 @@
 
 ## 📖 Description du Projet
 
-**CodeFam (Coding Family)** est une application desktop développée avec **JavaFX**, conçue comme une plateforme d'e-learning dédiée à l'apprentissage du codage, inspirée de plateformes comme Coursera ou Udemy. Elle propose une interface intuitive permettant aux utilisateurs d'accéder à une bibliothèque de cours structurés, organisés en packs thématiques, accompagnés de vidéos pédagogiques, quiz interactifs, et un forum intégré pour favoriser les échanges entre apprenants et tuteurs. L'application intègre un système de paiement sécurisé via **Stripe** pour les contenus premium et offre des tableaux de bord statistiques pour suivre les progrès et les activités des utilisateurs.
+**CodeFam (Coding Family)** est une application web développée avec le framework **Symfony PHP** dans le cadre d'un projet éducatif. Il s'agit d'une plateforme d'e-learning dédiée à l'apprentissage du codage, inspirée de Coursera ou Udemy. Elle permet aux utilisateurs de :
 
-### 🎯 Fonctionnalités Principales
-- **Gestion des Utilisateurs** : 
-  - Authentification flexible via email/mot de passe ou compte Google.
-  - Vérification de compte par code envoyé par email.
-  - Réinitialisation de mot de passe oublié.
-  - Trois rôles définis (Admin, Tuteur, Utilisateur) avec permissions spécifiques.
-  - CRUD complet des comptes par l'admin, avec envoi d'emails de rappel automatiques aux utilisateurs non vérifiés pendant 7 jours et suppression du compte après ce délai.
-  - Mécanisme de sauvegarde de la base de données configurable via cron (périodicité de 3 minutes à 24 heures) ou déclenchable manuellement via un bouton.
-  - Tableau de bord statistique pour visualiser les données des utilisateurs et leurs activités, renforçant l'interactivité et la gestion efficace.
-- **Cours et Contenus** : Accès à des cours organisés par catégories, avec vidéos, PDF téléchargeables, et quiz personnalisables (facile, moyen, difficile).
-- **Forum Interactif** : Système de posts et commentaires avec support d'images, filtrage de contenu via **API Ninjas**, et structure hiérarchique pour les réponses.
-- **Quiz Dynamiques** : Création, modification, et génération aléatoire de quiz avec visualisation des résultats via graphiques (PieChart).
-- **Paiement et Facturation** : Intégration de **Stripe** pour des paiements sécurisés et exportation de factures détaillées au format Excel.
-- **Statistiques** : Tableaux de bord pour visualiser les données des utilisateurs, revenus, achats, et performances des quiz/offres.
-- **Sécurité** : Protection contre les captures d’écran, filtrage de contenu (profanité), et contrôle d’accès par rôle.
-- **Recherche Dynamique** : Filtrage en temps réel des catégories, cours, vidéos, quiz, et posts.
+- Accéder à une bibliothèque de cours structurés, organisés en catégories avec vidéos et PDF.
+- Participer à des quiz interactifs pour évaluer leurs compétences.
+- Interagir via un forum intégré avec posts et commentaires.
+- Acheter des offres premium via un système de paiement sécurisé (**Stripe**).
+- Gérer leur profil et suivre leur progression.
+- Bénéficier d'une recherche intelligente des offres par prix.
+
+L'objectif est de fournir une expérience d'apprentissage intuitive, sécurisée et engageante pour les passionnés de programmation.
 
 ## 🗂 Table des Matières
 
 - [Pré-requis](#pré-requis)
 - [Installation](#installation)
 - [Utilisation](#utilisation)
-- [Structure du Projet](#structure-du-projet)
+- [Fonctionnalités](#fonctionnalités)
 - [APIs Utilisées](#apis-utilisées)
-- [Contribuer](#contribuer)
-- [Démo](#démo)
-- [Contact](#contact)
 
 ## ✅ Pré-requis
 
-Avant de lancer l'application, assurez-vous d'avoir installé :
+Avant d’installer le projet, assurez-vous d’avoir les éléments suivants installés sur votre machine :
 
-- **[JDK 17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)** : Nécessaire pour exécuter l'application JavaFX.
-- **[JavaFX SDK](https://openjfx.io/)** : Framework pour l'interface graphique.
-- **[Maven](https://maven.apache.org/)** : Gestion des dépendances.
-- **[MySQL](https://www.mysql.com/)** : Base de données pour stocker les données.
-- **[Git](https://git-scm.com/)** : Pour cloner le repository.
-- **Clé API [Stripe](https://stripe.com/)** : Pour les paiements (mode test recommandé).
-- **Clé API [API Ninjas](https://api-ninjas.com/)** : Pour la modération de contenu.
-- **Clé API [Cronitor](https://cronitor.io/)** : Pour la gestion des tâches cron.
-- **Clé API [Google Cloud](https://cloud.google.com/)** : Pour l'authentification Google et autres services.
-- **Clé API [Open AI](https://openai.com/)** : Pour des fonctionnalités d'IA (optionnel).
-- **Compte [Badgr](https://badgr.com/)** : Pour la gestion des badges et certifications.
+- **PHP 8.1.26** ou supérieur
+- **[Composer](https://getcomposer.org/)** : Gestion des dépendances PHP
+- **[Symfony CLI](https://symfony.com/download)** : Pour lancer le serveur
+- **MySQL** : Base de données
+- **[Git](https://git-scm.com/)** : Pour cloner le repository
+- **Node.js et npm** : Pour gérer les assets frontend
+- **Clé API [Stripe](https://stripe.com/)** : Pour les paiements (mode test recommandé)
+- **Clé API [Google Cloud](https://cloud.google.com/)** : Pour l'authentification Google
 
 ## ⚙ Installation
 
-Suivez ces étapes pour configurer le projet localement :
-
 1. **Cloner le repository** :
    ```bash
-   git clone https://github.com/CodeFam/codefamJavaFx.git
+   git clone https://github.com/CodeFam/codefamWeb.git
+   cd codefamWeb
    ```
 
-2. **Naviguer dans le dossier du projet** :
+2. **Installer les dépendances PHP** :
    ```bash
-   cd codefamJavaFx
+   composer install
    ```
 
-3. **Configurer la base de données** :
-   - Créez une base de données MySQL nommée `codefam_db` :
+3. **Installer les dépendances frontend** :
+   ```bash
+   npm install
+   ```
+
+4. **Build des assets frontend (Tailwind CSS, etc.)** :
+   ```bash
+   npm run build
+   ```
+
+5. **Configurer la base de données** :
+   - Créez une base de données MySQL :
      ```sql
      CREATE DATABASE codefam_db;
      ```
-   - Importez le schéma SQL depuis `src/main/resources/database/schema.sql` :
-     ```bash
-     mysql -u votre_utilisateur -p codefam_db < src/main/resources/database/schema.sql
+   - Configurez les informations de connexion dans `.env` ou `.env.local` :
+     ```env
+     DATABASE_URL="mysql://votre_utilisateur:votre_mot_de_passe@127.0.0.1:3306/codefam_db"
+     STRIPE_API_KEY=sk_test_votre_cle_stripe
+     GOOGLE_API_KEY=votre_cle_google
      ```
-   - Mettez à jour les informations de connexion dans `src/main/resources/config.properties` :
-     ```properties
-     db.url=jdbc:mysql://localhost:3306/codefam_db
-     db.user=votre_utilisateur
-     db.password=votre_mot_de_passe
-     stripe.api.key=sk_test_votre_cle_stripe
-     apininjas.api.key=votre_cle_api_ninjas
-     cronitor.api.key=votre_cle_cronitor
-     google.api.key=votre_cle_google
-     openai.api.key=votre_cle_openai
-     badgr.api.key=votre_cle_badgr
+   - Exécutez les migrations pour créer les tables :
+     ```bash
+     symfony console doctrine:database:create
+     symfony console doctrine:migrations:migrate
      ```
 
-4. **Installer les dépendances** :
+6. **Lancer le serveur local Symfony** :
    ```bash
-   mvn clean install
+   symfony server:start
    ```
+
+7. **Accéder à l'application** :
+   👉 [http://127.0.0.1:8000](http://127.0.0.1:8000)
 
 ## 🚀 Utilisation
 
-Pour exécuter l’application :
+Une fois l’application lancée, vous pouvez :
 
-1. **Ouvrir le projet dans un IDE** (IntelliJ IDEA, Eclipse, etc.).
-2. **Exécuter la classe principale** : `src/main/java/main/CodeFamMain.java`.
-3. **Ou via la ligne de commande** :
-   ```bash
-   mvn javafx:run
-   ```
+- **Explorer les cours** : Parcourez les catégories et accédez aux vidéos/PDF.
+- **Répondre à des quiz** : Testez vos connaissances avec des quiz personnalisés.
+- **Interagir dans le forum** : Créez des posts et commentez.
+- **Acheter des offres** : Utilisez une carte de test Stripe (ex. `4242 4242 4242 4242`) pour simuler un achat.
+- **Gérer votre profil** : Connectez-vous via email/Google, réinitialisez votre mot de passe, et suivez votre progression.
+- **Rechercher des offres** : Filtrez les offres par prix pour trouver celles qui correspondent à votre budget.
+- **Administrer (Admin/Tuteur)** : Gérez les utilisateurs, cours, quiz, et visualisez les statistiques.
 
-### Tester les fonctionnalités :
-- **Admin/Tuteur** : Connectez-vous avec un compte admin (ex. `admin@gmail.com`, mot de passe : `Secure123!!`) pour gérer utilisateurs,les cours, quiz, et visualiser les statistiques.
-- **Utilisateur** : Créez un compte, vérifiez-le via email, abonnez-vous à des catégories, et accédez aux cours/quiz.
-- **Paiements** : Utilisez une carte de test Stripe (ex. `4242 4242 4242 4242`) pour simuler un achat.
-- **Forum** : Créez des posts, commentez, et interagissez avec la communauté.
-- **Statistiques** : Consultez les tableaux de bord pour voir les graphiques des performances.
-- **Sauvegarde** : Configurez les tâches cron via Cronitor ou déclenchez une sauvegarde manuelle.
+## 🛠 Fonctionnalités
 
-### Commandes Maven utiles :
-- Compiler : `mvn compile`
-- Tester : `mvn test`
-- Packager : `mvn package`
+### Gestion des Utilisateurs
+- Authentification via email/mot de passe ou compte Google.
+- Réinitialisation sécurisée du mot de passe oublié.
+- Gestion complète (CRUD) des comptes par les administrateurs.
+- Tableau de bord statistique pour visualiser les données des utilisateurs et leurs interactions.
 
-## 🗄 Structure du Projet
+### Gestion des Offres et Achats
+- Opérations CRUD pour les offres et achats (création, modification, suppression, consultation).
+- Paiement en ligne sécurisé via **Stripe**.
+- Interface détaillée des achats (date, montant, offre, utilisateur).
+- Recherche intelligente des offres par prix pour filtrer selon le budget.
 
-```
-codefamJavaFx/
-├── src/
-│   ├── main/
-│   │   ├── java/
-│   │   │   ├── main/CodeFamMain.java       # Point d'entrée de l'application
-│   │   │   ├── controllers/                # Contrôleurs MVC
-│   │   │   ├── models/                    # Entités (Post, Comment, User, etc.)
-│   │   │   ├── services/                  # Logique métier
-│   │   │   ├── utils/                     # Utilitaires (DB, API, etc.)
-│   │   ├── resources/
-│   │   │   ├── fxml/                      # Interfaces FXML
-│   │   │   ├── css/                       # Styles CSS
-│   │   │   ├── config.properties          # Configuration (DB, API)
-│   │   │   ├── database/schema.sql        # Schéma SQL
-│   ├── test/                              # Tests unitaires
-├── pom.xml                                # Dépendances Maven
-├── README.md                              # Documentation
-```
+### Rôles et Permissions
+- **Administrateur/Tuteur** :
+  - Gestion complète (CRUD) des catégories, noms de cours, cours, et vidéos.
+  - Recherche dynamique sur toutes les entités.
+  - Visualisation des moyennes des évaluations par vidéo.
+- **Utilisateur** :
+  - Accès aux catégories abonnées.
+  - Visualisation/téléchargement des cours (vidéos, PDF).
+  - Évaluation des vidéos.
+  - Progression : +1% pour un PDF téléchargé, +90% pour les vidéos terminées.
+
+### Forum (Posts et Commentaires)
+- Création, modification, suppression de posts avec support d'images.
+- Système de commentaires hiérarchique (réponses imbriquées).
+- Filtrage de contenu (profanité, XSS).
+- Recherche de posts.
+- Entités :
+  ```php
+  Post {
+      id: int
+      userId: int
+      contenu: string
+      dateCreation: DateTime
+      image: string (optional)
+  }
+  Commentaire {
+      id: int
+      userId: int
+      postId: int
+      parentId: int (nullable)
+      contenu: string
+      dateCreation: DateTime
+  }
+  ```
+
+### Gestion des Quiz
+- Création, modification, suppression de quiz (noms, cours, niveaux : facile, moyen, difficile).
+- Gestion des questions avec réponses à choix multiples.
+- Génération alé нашого
+
+atoire de quiz basée sur le cours, le niveau de difficulté et le nombre de questions.
+- Administration des réponses (correctes/incorrectes).
+- Visualisation des résultats via graphiques (PieChart).
+- Recherche dynamique des quiz par nom, cours, ou niveau.
+
+### Sécurité
+- Protection contre les captures d’écran et enregistrements vidéo.
+- Contrôle d’accès basé sur les rôles (admin, tuteur, utilisateur).
+- Validation des entrées (longueur, profanité, XSS).
+- Authentification et permissions sécurisées.
 
 ## 🌐 APIs Utilisées
 
-- **[Stripe](https://stripe.com/)** : Gestion des paiements sécurisés.
-- **[API Ninjas](https://api-ninjas.com/)** : Modération de contenu et filtrage de profanité.
-- **[Cronitor](https://cronitor.io/)** : Gestion et monitoring des tâches cron pour les sauvegardes.
-- **[Google Cloud API](https://cloud.google.com/)** : Authentification Google et services cloud.
-- **[Open AI](https://openai.com/)** : Fonctionnalités d'intelligence artificielle (optionnel).
-- **[Badgr](https://badgr.com/)** : Gestion des badges et certifications pour les utilisateurs.
+- **[Stripe](https://stripe.com/)** : Paiements sécurisés.
+- **[Google Cloud API](https://cloud.google.com/)** : Authentification Google.
 
 ## 🤝 Contribuer
 
-Nous accueillons les contributions ! Suivez ces étapes :
-
-1. **Forkez le projet**.
-2. Créez une branche pour vos modifications :
-   ```bash
-   git checkout -b feature/nouvelle-fonctionnalite
-   ```
-3. Commitez vos changements :
-   ```bash
-   git commit -m "Ajout de nouvelle fonctionnalité"
-   ```
-4. Poussez votre branche :
-   ```bash
-   git push origin feature/nouvelle-fonctionnalite
-   ```
-5. Ouvrez une **Pull Request** sur GitHub.
+1. Forkez le projet.
+2. Créez une branche : `git checkout -b feature/nouvelle-fonctionnalite`.
+3. Commitez vos changements : `git commit -m "Ajout de nouvelle fonctionnalité"`.
+4. Poussez votre branche : `git push origin feature/nouvelle-fonctionnalite`.
+5. Ouvrez une Pull Request.
 
 ### Bonnes pratiques :
-- Suivez le pattern **MVC**.
-- Utilisez des **requêtes préparées** pour les interactions avec la base de données.
-- Testez vos modifications avec `mvn test`.
-- Documentez votre code et respectez les conventions Java.
+- Suivez les conventions PSR pour PHP.
+- Validez les entrées et utilisez des requêtes préparées pour la base de données.
+- Testez avec `phpunit` avant de soumettre.
 
 ## 🎥 Démo
 
@@ -191,7 +199,7 @@ Nous accueillons les contributions ! Suivez ces étapes :
 ---
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Made%20with-JavaFX-orange" alt="Made with JavaFX"/>
+  <img src="https://img.shields.io/badge/Made%20with-Symfony-blue" alt="Made with Symfony"/>
   <img src="https://img.shields.io/badge/License-MIT-green" alt="License MIT"/>
 </p>
 """
