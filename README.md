@@ -14,8 +14,15 @@
 **CodeFam (Coding Family)** est une application desktop développée avec **JavaFX**, conçue comme une plateforme d'e-learning dédiée à l'apprentissage du codage, inspirée de plateformes comme Coursera ou Udemy. Elle propose une interface intuitive permettant aux utilisateurs d'accéder à une bibliothèque de cours structurés, organisés en packs thématiques, accompagnés de vidéos pédagogiques, quiz interactifs, et un forum intégré pour favoriser les échanges entre apprenants et tuteurs. L'application intègre un système de paiement sécurisé via **Stripe** pour les contenus premium et offre des tableaux de bord statistiques pour suivre les progrès et les activités des utilisateurs.
 
 ### 🎯 Fonctionnalités Principales
+- **Gestion des Utilisateurs** : 
+  - Authentification flexible via email/mot de passe ou compte Google.
+  - Vérification de compte par code envoyé par email.
+  - Réinitialisation de mot de passe oublié.
+  - Trois rôles définis (Admin, Tuteur, Utilisateur) avec permissions spécifiques.
+  - CRUD complet des comptes par l'admin, avec envoi d'emails de rappel automatiques aux utilisateurs non vérifiés pendant 7 jours et suppression du compte après ce délai.
+  - Mécanisme de sauvegarde de la base de données configurable via cron (périodicité de 3 minutes à 24 heures) ou déclenchable manuellement via un bouton.
+  - Tableau de bord statistique pour visualiser les données des utilisateurs et leurs activités, renforçant l'interactivité et la gestion efficace.
 - **Cours et Contenus** : Accès à des cours organisés par catégories, avec vidéos, PDF téléchargeables, et quiz personnalisables (facile, moyen, difficile).
-- **Gestion des Utilisateurs** : Authentification flexible (email/mot de passe ou Google), vérification par email, réinitialisation de mot de passe, et rôles (Admin, Tuteur, Utilisateur) avec permissions spécifiques.
 - **Forum Interactif** : Système de posts et commentaires avec support d'images, filtrage de contenu via **API Ninjas**, et structure hiérarchique pour les réponses.
 - **Quiz Dynamiques** : Création, modification, et génération aléatoire de quiz avec visualisation des résultats via graphiques (PieChart).
 - **Paiement et Facturation** : Intégration de **Stripe** pour des paiements sécurisés et exportation de factures détaillées au format Excel.
@@ -29,6 +36,7 @@
 - [Installation](#installation)
 - [Utilisation](#utilisation)
 - [Structure du Projet](#structure-du-projet)
+- [APIs Utilisées](#apis-utilisées)
 - [Contribuer](#contribuer)
 - [Démo](#démo)
 - [Contact](#contact)
@@ -44,6 +52,10 @@ Avant de lancer l'application, assurez-vous d'avoir installé :
 - **[Git](https://git-scm.com/)** : Pour cloner le repository.
 - **Clé API [Stripe](https://stripe.com/)** : Pour les paiements (mode test recommandé).
 - **Clé API [API Ninjas](https://api-ninjas.com/)** : Pour la modération de contenu.
+- **Clé API [Cronitor](https://cronitor.io/)** : Pour la gestion des tâches cron.
+- **Clé API [Google Cloud](https://cloud.google.com/)** : Pour l'authentification Google et autres services.
+- **Clé API [Open AI](https://openai.com/)** : Pour des fonctionnalités d'IA (optionnel).
+- **Compte [Badgr](https://badgr.com/)** : Pour la gestion des badges et certifications.
 
 ## ⚙ Installation
 
@@ -75,6 +87,10 @@ Suivez ces étapes pour configurer le projet localement :
      db.password=votre_mot_de_passe
      stripe.api.key=sk_test_votre_cle_stripe
      apininjas.api.key=votre_cle_api_ninjas
+     cronitor.api.key=votre_cle_cronitor
+     google.api.key=votre_cle_google
+     openai.api.key=votre_cle_openai
+     badgr.api.key=votre_cle_badgr
      ```
 
 4. **Installer les dépendances** :
@@ -94,11 +110,12 @@ Pour exécuter l’application :
    ```
 
 ### Tester les fonctionnalités :
-- **Admin/Tuteur** : Connectez-vous avec un compte admin (ex. `admin@codefam.com`, mot de passe : `admin123`) pour gérer les cours, quiz, utilisateurs, et visualiser les statistiques.
+- **Admin/Tuteur** : Connectez-vous avec un compte admin (ex. `admin@gmail.com`, mot de passe : `Secure123!!`) pour gérer utilisateurs,les cours, quiz, et visualiser les statistiques.
 - **Utilisateur** : Créez un compte, vérifiez-le via email, abonnez-vous à des catégories, et accédez aux cours/quiz.
 - **Paiements** : Utilisez une carte de test Stripe (ex. `4242 4242 4242 4242`) pour simuler un achat.
 - **Forum** : Créez des posts, commentez, et interagissez avec la communauté.
 - **Statistiques** : Consultez les tableaux de bord pour voir les graphiques des performances.
+- **Sauvegarde** : Configurez les tâches cron via Cronitor ou déclenchez une sauvegarde manuelle.
 
 ### Commandes Maven utiles :
 - Compiler : `mvn compile`
@@ -126,6 +143,15 @@ codefamJavaFx/
 ├── pom.xml                                # Dépendances Maven
 ├── README.md                              # Documentation
 ```
+
+## 🌐 APIs Utilisées
+
+- **[Stripe](https://stripe.com/)** : Gestion des paiements sécurisés.
+- **[API Ninjas](https://api-ninjas.com/)** : Modération de contenu et filtrage de profanité.
+- **[Cronitor](https://cronitor.io/)** : Gestion et monitoring des tâches cron pour les sauvegardes.
+- **[Google Cloud API](https://cloud.google.com/)** : Authentification Google et services cloud.
+- **[Open AI](https://openai.com/)** : Fonctionnalités d'intelligence artificielle (optionnel).
+- **[Badgr](https://badgr.com/)** : Gestion des badges et certifications pour les utilisateurs.
 
 ## 🤝 Contribuer
 
